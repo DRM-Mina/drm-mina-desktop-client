@@ -5,10 +5,8 @@ import {
   CardFooter,
   CardTitle,
 } from '@/components/ui/card';
-import { useEffect } from 'react';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { useUserStore } from '../lib/stores/userWallet';
-import { fetchWishlist } from '../lib/api';
 
 const ENDPOINT = 'http://localhost:3152/';
 
@@ -16,14 +14,6 @@ export default function Wishlist() {
   const gameStore = useGamesStore();
 
   const userStore = useUserStore();
-
-  useEffect(() => {
-    if (userStore.isConnected) {
-      fetchWishlist(userStore.userPublicKey || '').then((data) => {
-        userStore.setWishlist(data);
-      });
-    }
-  }, []);
 
   return userStore.isConnected ? (
     <div className=" p-8">

@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import {
   Card,
   CardContent,
@@ -20,7 +19,6 @@ import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import GameBookmark from './bookmark';
-import { fetchGameData } from '../lib/api';
 
 const ENDPOINT = 'http://localhost:3152/';
 
@@ -28,12 +26,6 @@ export default function Featured() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const gameStore = useGamesStore();
-
-  useMemo(() => {
-    fetchGameData().then((data) => {
-      gameStore.setGames(data);
-    });
-  }, []);
 
   return (
     <div className="row-span-1 col-span-3 lg:col-span-5 flex justify-center py-8">

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ModeToggle } from '@/components/mode-toggle';
 import {
   DropdownMenu,
@@ -20,47 +20,18 @@ import {
   Bell,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import useHasMounted from '../lib/customHooks';
-import { useToast } from '@/components/ui/use-toast';
 import Web3Wallet from './web3Wallet';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
   const [currentPath, setCurrentPath] = useState<string>('/');
-  // const router = useRouter();
   const navigate = useNavigate();
-  const hasMounted = useHasMounted();
-
-  const { toast } = useToast();
 
   const handleNavigate = (path: string) => {
     setCurrentPath(path);
-    // router.push(path);
     navigate(path);
   };
-
-  // useEffect(() => {
-  //   if (hasMounted) {
-  //     const worker = new Worker(new URL('../../lib/worker', import.meta.url));
-  //     const api = wrap<WebWorker>(worker);
-
-  //     toast({
-  //       title: 'Web workers loading',
-  //       description:
-  //         "Our web workers working hard to getting ready things up, computer's fans could speed up a little 😬",
-  //     });
-  //     worker.onmessage = (event) => {
-  //       if (event.data.type === 'CONTRACTS_COMPILED') {
-  //         toast({
-  //           title: 'Web workers loaded',
-  //           description: 'Web workers have been loaded. Sorry for the noise 😅',
-  //         });
-  //         window.worker = api;
-  //       }
-  //     };
-  //   }
-  // }, [hasMounted]);
 
   return (
     <div
@@ -96,7 +67,6 @@ export function Sidebar({ className }: SidebarProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          {/* <h2 className="my-2 px-4 text-lg font-semibold tracking-tight">Marketplace</h2> */}
           <div className="space-y-1 my-2">
             <Button
               variant={
