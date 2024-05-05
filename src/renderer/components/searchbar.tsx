@@ -12,7 +12,7 @@ export default function Searchbar() {
           e.preventDefault();
           const search = (e.target as HTMLFormElement)['search'].value;
           (e.target as HTMLFormElement)['search'].value = '';
-          navigate('/browse?search=' + search);
+          navigate('/browse/' + search);
         }}
       >
         <div className="relative w-[30vw]">

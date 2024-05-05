@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { fetchGameData, fetchWishlist } from './lib/api';
 import { useGamesStore } from './lib/stores/gameStore';
 import { useUserStore } from './lib/stores/userWallet';
+import Browse from './pages/browse';
 
 const priceQuery = `
 query GetPrices {
@@ -173,6 +174,7 @@ export default function App() {
                   <Route path="/categories" element={<Categories />} />
                   <Route path="/library" element={<Library />} />
                   <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/browse/:search" element={<Browse />} />
                   <Route
                     path="/game-detail/:gameName"
                     element={<GameDetail />}
