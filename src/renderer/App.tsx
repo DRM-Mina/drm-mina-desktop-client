@@ -6,8 +6,158 @@ import { Sidebar } from './components/sidebar';
 import { ThemeProvider } from '@/components/theme-provider';
 import Searchbar from './components/searchbar';
 import GameDetail from './components/game-detail';
+import Categories from './pages/categories';
+import Library from './pages/library';
+import Wishlist from './pages/wishlist';
+import { useEffect } from 'react';
+import { fetchGameData, fetchWishlist } from './lib/api';
+import { useGamesStore } from './lib/stores/gameStore';
+import { useUserStore } from './lib/stores/userWallet';
+
+const priceQuery = `
+query GetPrices {
+  runtime {
+    GameToken {
+      gamePrice(key: {value: "$gameId"}) {
+        value
+      }
+      discount(key: {value: "$gameId"}) {
+        value
+      }
+    }
+  }
+}
+`;
+
+const gameNumberQuery = `
+query TotalGameNumber {
+  runtime {
+    GameToken {
+      totalGameNumber {
+        value
+      }
+    }
+  }
+}
+`;
+
+const libraryQuery = `
+query getLibrary {
+  runtime {
+    GameToken {
+      users(key: {address: "$address", gameId: {value: "$gameId"}})
+    }
+  }
+}
+`;
 
 export default function App() {
+  const gameStore = useGamesStore();
+
+  const userStore = useUserStore();
+
+  useEffect(() => {
+    if (userStore.isConnected) {
+      (async () => {
+        const wishlist = await fetchWishlist(userStore.userPublicKey!);
+
+        userStore.setWishlist(wishlist);
+
+        const gameNumberResponse = await fetch(
+          'http://localhost:8080/graphql',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: gameNumberQuery,
+            }),
+          },
+        );
+
+        const { data } = (await gameNumberResponse.json()) as GameNumber;
+
+        const gameIds = Array.from(
+          { length: Number(data.runtime.GameToken.totalGameNumber.value) },
+          (_, i) => i + 1,
+        );
+        let library: number[] = [];
+        for (const gameId of gameIds) {
+          const response = await fetch('http://localhost:8080/graphql', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: libraryQuery
+                .replace(/\$address/g, userStore.userPublicKey!)
+                .replace(/\$gameId/g, gameId.toString()),
+            }),
+          });
+
+          const { data } = (await response.json()) as Library;
+
+          if (data.runtime.GameToken.users) {
+            library.push(gameId);
+          }
+        }
+        userStore.setLibrary(library);
+      })();
+    }
+  }, [userStore.isConnected, userStore.userPublicKey]);
+
+  useEffect(() => {
+    (async () => {
+      const games: Game[] = await fetchGameData();
+
+      const gameNumberResponse = await fetch('http://localhost:8080/graphql', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: gameNumberQuery,
+        }),
+      });
+
+      const { data } = (await gameNumberResponse.json()) as GameNumber;
+
+      const gameIds = Array.from(
+        { length: Number(data.runtime.GameToken.totalGameNumber.value) },
+        (_, i) => i + 1,
+      );
+      for (const gameId of gameIds) {
+        const response = await fetch('http://localhost:8080/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: priceQuery.replace(/\$gameId/g, gameId.toString()),
+          }),
+        });
+
+        const { data } = (await response.json()) as GamePrices;
+
+        if (
+          data.runtime.GameToken.discount?.value &&
+          data.runtime.GameToken.gamePrice?.value
+        ) {
+          games[gameId - 1].price = Number(
+            data.runtime.GameToken.gamePrice?.value.toString(),
+          );
+          games[gameId - 1].discount = Number(
+            data.runtime.GameToken.discount?.value.toString(),
+          );
+        }
+      }
+      gameStore.setGames(games);
+      const discounts = games.filter((game: Game) => game.discount > 0);
+      gameStore.setDiscountGames(discounts);
+    })();
+  }, []);
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="theme-mode">
       <div className="border-t absolute inset-0">
@@ -20,10 +170,9 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/store" element={<Home />} />
-                  <Route path="/browse" element={<div>browse</div>} />
-                  <Route path="/categories" element={<div>categories</div>} />
-                  <Route path="/library" element={<div>library</div>} />
-                  <Route path="/wishlist" element={<div>wishlist</div>} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/library" element={<Library />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
                   <Route
                     path="/game-detail/:gameName"
                     element={<GameDetail />}
