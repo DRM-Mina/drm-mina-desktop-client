@@ -1,5 +1,3 @@
-'use client';
-import React, { useMemo } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -17,22 +15,8 @@ import {
 
 import GameBookmark from './bookmark';
 import DiscountRate from './discountRate';
-import { fetchGameData } from '../lib/api';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
-
-interface Game {
-  gameId: number;
-  name: string;
-  description: string;
-  creator: string;
-  cover: string;
-  price: number;
-  discount: number;
-  rating: number;
-  releaseDate: string;
-  tags: string[];
-}
 
 const ENDPOINT = 'http://localhost:3152/';
 
@@ -40,12 +24,6 @@ export default function Discounts() {
   const gameStore = useGamesStore();
 
   const navigate = useNavigate();
-  useMemo(() => {
-    fetchGameData().then((data) => {
-      data = data.filter((game: Game) => game.discount > 0);
-      gameStore.setDiscountGames(data);
-    });
-  }, []);
 
   return (
     <div className="row-span-1 col-span-3 lg:col-span-5 flex justify-center">
