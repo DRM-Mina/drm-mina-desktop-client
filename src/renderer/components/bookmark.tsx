@@ -1,4 +1,3 @@
-import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import { Bookmark } from 'lucide-react';
 import { useUserStore } from '../lib/stores/userWallet';
@@ -12,7 +11,6 @@ export default function GameBookmark({
   gameId: number;
 }) {
   const userStore = useUserStore();
-  const { toast } = useToast();
   return (
     <Bookmark
       className={cn(
@@ -30,18 +28,11 @@ export default function GameBookmark({
             gameId,
           );
           if (!status) {
-            toast({
-              description: 'Removed from wishlist',
-            });
             userStore.removeWishlist(gameId);
           } else {
-            toast({ description: 'Added to wishlist' });
             userStore.addWishlist(gameId);
           }
         } else {
-          toast({
-            description: 'Please connect your wallet',
-          });
         }
       }}
     ></Bookmark>

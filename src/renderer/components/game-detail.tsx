@@ -1,6 +1,3 @@
-'use client';
-import React from 'react';
-
 import {
   Carousel,
   CarouselContent,
@@ -17,12 +14,12 @@ const ENDPOINT = 'http://localhost:3152/';
 
 export default function GameDetail() {
   const { gameName } = useParams();
-  console.log(gameName);
   const navigate = useNavigate();
-
   const gameStore = useGamesStore();
 
   const game = gameStore.games.find((game) => game.name === gameName);
+
+  const handleDownload = () => {};
 
   return (
     <div>
@@ -110,7 +107,7 @@ export default function GameDetail() {
                 </Button>
               </div>
               <Button variant={'link'} className="">
-                <Download size={24} />
+                <Download size={24} onClick={handleDownload} />
                 Download Game
               </Button>
             </div>

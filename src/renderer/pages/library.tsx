@@ -8,7 +8,6 @@ import {
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-import { useToast } from '@/components/ui/use-toast';
 
 const ENDPOINT = 'http://localhost:3152/';
 
@@ -16,14 +15,7 @@ export default function Library() {
   const userStore = useUserStore();
   const gameStore = useGamesStore();
 
-  const { toast } = useToast();
-
-  const handleGameDownload = () => {
-    toast({
-      title: 'Download started',
-      description: 'Just kidding we do not have this feature yet 🚀',
-    });
-  };
+  const handleGameDownload = () => {};
   return (
     <div className=" p-8">
       {userStore.isConnected ? (
@@ -90,7 +82,7 @@ export default function Library() {
       ) : (
         <div className="flex h-[80vh] items-center justify-center">
           <h3 className="text-3xl font-medium">
-            Please connect your wallet to view your library
+            Please enter your wallet to view your library
           </h3>
         </div>
       )}
