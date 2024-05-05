@@ -1,18 +1,8 @@
 import { create } from 'zustand';
-interface Game {
-  gameId: number;
-  name: string;
-  description: string;
-  creator: string;
-  cover: string;
-  price: number;
-  discount: number;
-  rating: number;
-  releaseDate: string;
-  tags: string[];
-}
+
 interface GameStoreState {
   games: Game[];
+  isGameSet: boolean;
   discountGames: Game[];
   setGames: (gameList: Game[]) => void;
   setDiscountGames: (gameList: Game[]) => void;
@@ -20,7 +10,8 @@ interface GameStoreState {
 
 export const useGamesStore = create<GameStoreState>()((set) => ({
   games: [],
+  isGameSet: false,
   discountGames: [],
-  setGames: (gameList) => set({ games: gameList }),
+  setGames: (gameList) => set({ games: gameList, isGameSet: true }),
   setDiscountGames: (gameList) => set({ discountGames: gameList }),
 }));

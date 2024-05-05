@@ -22,6 +22,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import useHasMounted from '../lib/customHooks';
 import { useToast } from '@/components/ui/use-toast';
+import Web3Wallet from './web3Wallet';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -133,6 +134,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Bookmark className="mr-2 h-4 w-4" />
               Wishlist
             </Button>
+            <Web3Wallet />
           </div>
         </div>
       </div>
