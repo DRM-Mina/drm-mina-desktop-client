@@ -89,7 +89,7 @@ export default function GameDetail() {
                     <></>
                   )}
                   <span className="text-base">
-                    {game?.price - game?.discount}
+                    {game?.price! - game?.discount!}
                   </span>
                   <img
                     src={'/mina.png'}

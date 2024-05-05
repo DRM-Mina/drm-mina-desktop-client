@@ -5,8 +5,6 @@ import {
   CardShadow,
   CardTitle,
 } from '@/components/ui/card';
-
-import { useToast } from '@/components/ui/use-toast';
 import {
   Carousel,
   CarouselContent,
@@ -19,13 +17,15 @@ import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import GameBookmark from './bookmark';
+import { useUserStore } from '../lib/stores/userWallet';
+import { Check } from 'lucide-react';
 
 const ENDPOINT = 'http://localhost:3152/';
 
 export default function Featured() {
-  const { toast } = useToast();
   const navigate = useNavigate();
   const gameStore = useGamesStore();
+  const userStore = useUserStore();
 
   return (
     <div className="row-span-1 col-span-3 lg:col-span-5 flex justify-center py-8">
@@ -76,17 +76,25 @@ export default function Featured() {
                           className=" w-5 h-5 inline-block"
                         />
                       </CardShadow>
-                      <Button
-                        variant={'default'}
-                        onClick={(e) => {
-                          toast({
-                            description: 'Soon',
-                          });
-                          e.stopPropagation();
-                        }}
-                      >
-                        Buy Game
-                      </Button>
+
+                      {!userStore.library.includes(game.gameId || -1) ? (
+                        <Button
+                          variant={'default'}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            window.electron.ipcRenderer.sendMessage(
+                              'redirect-buy-game',
+                              [game?.name],
+                            );
+                          }}
+                        >
+                          Buy Game
+                        </Button>
+                      ) : (
+                        <div className=" flex flex-row items-center text-green-700">
+                          <Check /> <span>Owned</span>
+                        </div>
+                      )}
                     </div>
                   </CardFooter>
                 </Card>
