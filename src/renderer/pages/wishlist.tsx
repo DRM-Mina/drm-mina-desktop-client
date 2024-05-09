@@ -8,7 +8,7 @@ import {
 import { useGamesStore } from '../lib/stores/gameStore';
 import { useUserStore } from '../lib/stores/userWallet';
 
-const ENDPOINT = 'http://localhost:3152/';
+const ENDPOINT = 'https://drmmina_api.kadircan.org/';
 
 export default function Wishlist() {
   const gameStore = useGamesStore();

@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { Separator } from '@/components/ui/separator';
 
-const ENDPOINT = 'http://localhost:3152/';
+const ENDPOINT = 'https://drmmina_api.kadircan.org/';
 
 export default function GameDetail() {
   const { gameName } = useParams();

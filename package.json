@@ -181,14 +181,15 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "DrmMina",
+    "appId": "org.erb.DrmMina",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
       "node_modules",
-      "package.json"
+      "package.json",
+      "public"
     ],
     "afterSign": ".erb/scripts/notarize.js",
     "mac": {

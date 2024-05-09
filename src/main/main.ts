@@ -37,7 +37,7 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-const ENDPOINT = 'http://localhost:3000/';
+const ENDPOINT = 'https://drm-mina-marketplace.vercel.app/';
 
 let mainWindow: BrowserWindow | null = null;
 

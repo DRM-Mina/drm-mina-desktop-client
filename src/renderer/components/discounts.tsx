@@ -18,7 +18,7 @@ import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 
-const ENDPOINT = 'http://localhost:3152/';
+const ENDPOINT = 'https://drmmina_api.kadircan.org/';
 
 export default function Discounts() {
   const gameStore = useGamesStore();

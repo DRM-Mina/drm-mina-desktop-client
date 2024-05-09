@@ -65,7 +65,7 @@ export default function App() {
         userStore.setWishlist(wishlist);
 
         const gameNumberResponse = await fetch(
-          'http://localhost:8080/graphql',
+          'https://drmmina_chain.kadircan.org/graphql',
           {
             method: 'POST',
             headers: {
@@ -85,17 +85,20 @@ export default function App() {
         );
         let library: number[] = [];
         for (const gameId of gameIds) {
-          const response = await fetch('http://localhost:8080/graphql', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await fetch(
+            'https://drmmina_chain.kadircan.org/graphql',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                query: libraryQuery
+                  .replace(/\$address/g, userStore.userPublicKey!)
+                  .replace(/\$gameId/g, gameId.toString()),
+              }),
             },
-            body: JSON.stringify({
-              query: libraryQuery
-                .replace(/\$address/g, userStore.userPublicKey!)
-                .replace(/\$gameId/g, gameId.toString()),
-            }),
-          });
+          );
 
           const { data } = (await response.json()) as Library;
 
@@ -112,15 +115,18 @@ export default function App() {
     (async () => {
       const games: Game[] = await fetchGameData();
 
-      const gameNumberResponse = await fetch('http://localhost:8080/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const gameNumberResponse = await fetch(
+        'https://drmmina_chain.kadircan.org/graphql',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: gameNumberQuery,
+          }),
         },
-        body: JSON.stringify({
-          query: gameNumberQuery,
-        }),
-      });
+      );
 
       const { data } = (await gameNumberResponse.json()) as GameNumber;
 
@@ -129,15 +135,18 @@ export default function App() {
         (_, i) => i + 1,
       );
       for (const gameId of gameIds) {
-        const response = await fetch('http://localhost:8080/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          'https://drmmina_chain.kadircan.org/graphql',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: priceQuery.replace(/\$gameId/g, gameId.toString()),
+            }),
           },
-          body: JSON.stringify({
-            query: priceQuery.replace(/\$gameId/g, gameId.toString()),
-          }),
-        });
+        );
 
         const { data } = (await response.json()) as GamePrices;
 

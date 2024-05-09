@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-const ENDPOINT = 'http://localhost:3152/';
+const ENDPOINT = 'https://drmmina_api.kadircan.org/';
 
 export default function Library() {
   const userStore = useUserStore();

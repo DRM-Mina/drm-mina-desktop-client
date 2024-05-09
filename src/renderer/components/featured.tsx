@@ -20,7 +20,7 @@ import GameBookmark from './bookmark';
 import { useUserStore } from '../lib/stores/userWallet';
 import { Check } from 'lucide-react';
 
-const ENDPOINT = 'http://localhost:3152/';
+const ENDPOINT = 'https://drmmina_api.kadircan.org/';
 
 export default function Featured() {
   const navigate = useNavigate();
