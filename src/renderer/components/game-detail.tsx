@@ -89,7 +89,7 @@ export default function GameDetail() {
                     {game?.price! - game?.discount!}
                   </span>
                   <img
-                    src={'/mina.png'}
+                    src={'https://drmmina_api.kadircan.org/images/mina.png'}
                     alt="mina"
                     className=" w-4 h-4 inline-block"
                   />

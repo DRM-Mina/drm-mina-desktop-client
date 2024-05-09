@@ -71,7 +71,9 @@ export default function Featured() {
                           {game?.price - game?.discount}
                         </span>
                         <img
-                          src={'/mina.png'}
+                          src={
+                            'https://drmmina_api.kadircan.org/images/mina.png'
+                          }
                           alt="mina"
                           className=" w-5 h-5 inline-block"
                         />
