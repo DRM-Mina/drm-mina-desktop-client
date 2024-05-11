@@ -181,15 +181,14 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "DrmMina",
-    "appId": "org.erb.DrmMina",
+    "productName": "DrmMinaClient",
+    "appId": "org.erb.DrmMinaClient",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
       "node_modules",
-      "package.json",
-      "public"
+      "package.json"
     ],
     "afterSign": ".erb/scripts/notarize.js",
     "mac": {
