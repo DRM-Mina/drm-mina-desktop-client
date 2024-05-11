@@ -59,7 +59,7 @@ export function getWindowsSystemInfo(): Promise<RawIdentifiers> {
         const baseboardSerialLine =
           lines
             .slice(systemUUIDLine)
-            .findIndex((line) => line.includes('SerialNumber')) + 1;
+            .findIndex((line) => line.includes('SerialNumber')) + 2;
         const baseboardSerial = lines[baseboardSerialLine].trim();
 
         const macAddresses = extractPhysicalAddresses(stdout);
