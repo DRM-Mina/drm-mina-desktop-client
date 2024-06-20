@@ -18,6 +18,7 @@ export default function GameDetail() {
   const gameStore = useGamesStore();
 
   const game = gameStore.games.find((game) => game.name === gameName);
+  const imageCount = game?.imageCount || 1;
 
   const handleDownload = () => {};
 
@@ -39,10 +40,21 @@ export default function GameDetail() {
             className="w-full p-4 justify-center"
           >
             <CarouselContent>
-              {Array.from({ length: 5 }).map((_, i) => (
+              {Array.from({ length: imageCount }).map((_, i) => (
                 <CarouselItem key={i}>
                   <img
-                    src={ENDPOINT + game?.cover}
+                    src={
+                      imageCount > 1
+                        ? ENDPOINT! +
+                          'images/' +
+                          game?.imageFolder +
+                          '/40/' +
+                          game?.imageFolder +
+                          '_ingame_' +
+                          (i + 1) +
+                          '.webp'
+                        : ENDPOINT! + 'images/default/40/default.webp'
+                    }
                     crossOrigin="anonymous"
                     alt="Game"
                     className="w-full h-full object-cover aspect-video"
@@ -89,7 +101,9 @@ export default function GameDetail() {
                     {game?.price! - game?.discount!}
                   </span>
                   <img
-                    src={'https://drmmina_api.kadircan.org/images/mina.png'}
+                    src={
+                      'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
+                    }
                     alt="mina"
                     className=" w-4 h-4 inline-block"
                   />

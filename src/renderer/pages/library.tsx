@@ -48,7 +48,14 @@ export default function Library() {
                   >
                     <CardContent className=" col-span-3 aspect-video items-center justify-center  p-4">
                       <img
-                        src={ENDPOINT + game.cover}
+                        src={
+                          ENDPOINT +
+                          'images/' +
+                          game.imageFolder +
+                          '/20/' +
+                          game.imageFolder +
+                          '.webp'
+                        }
                         crossOrigin="anonymous"
                         alt={game.name}
                         className="flex h-full w-full rounded-lg object-cover"

@@ -43,7 +43,14 @@ export default function Wishlist() {
                 >
                   <CardContent className=" absolute flex aspect-square w-[300px] items-center justify-center p-4">
                     <img
-                      src={ENDPOINT + game.cover}
+                      src={
+                        ENDPOINT +
+                        'images/' +
+                        game.imageFolder +
+                        '/10/' +
+                        game.imageFolder +
+                        '.webp'
+                      }
                       crossOrigin="anonymous"
                       alt={game.name}
                       className="card-image flex h-full w-full rounded-lg object-cover"

@@ -28,11 +28,6 @@ export default function Discounts() {
   return (
     <div className="row-span-1 col-span-3 lg:col-span-5 flex justify-center">
       <Carousel
-        // plugins={[
-        //   Autoplay({
-        //     delay: 6000,
-        //   }),
-        // ]}
         opts={{
           align: 'start',
         }}
@@ -51,7 +46,14 @@ export default function Discounts() {
                 >
                   <CardContent className="relative flex items-center justify-center p-6 lg:aspect-3/4 md:aspect-square">
                     <img
-                      src={ENDPOINT + game.cover}
+                      src={
+                        ENDPOINT +
+                        'images/' +
+                        game.imageFolder +
+                        '/10/' +
+                        game.imageFolder +
+                        '.webp'
+                      }
                       crossOrigin="anonymous"
                       alt={game.name}
                       className="w-full h-full object-cover"
@@ -71,7 +73,7 @@ export default function Discounts() {
                         </span>
                         <img
                           src={
-                            'https://drmmina_api.kadircan.org/images/mina.png'
+                            'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
                           }
                           alt="mina"
                           className=" w-4 h-4 inline-block"

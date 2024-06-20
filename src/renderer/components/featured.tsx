@@ -48,7 +48,14 @@ export default function Featured() {
                 >
                   <CardContent className="flex items-center justify-center p-6 lg:aspect-video md:aspect-square relative">
                     <img
-                      src={ENDPOINT + game.cover}
+                      src={
+                        ENDPOINT +
+                        'images/' +
+                        game.imageFolder +
+                        '/20/' +
+                        game.imageFolder +
+                        '.webp'
+                      }
                       crossOrigin="anonymous"
                       alt={game.name}
                       className="w-full h-full object-cover"
@@ -72,7 +79,7 @@ export default function Featured() {
                         </span>
                         <img
                           src={
-                            'https://drmmina_api.kadircan.org/images/mina.png'
+                            'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
                           }
                           alt="mina"
                           className=" w-5 h-5 inline-block"
