@@ -3,11 +3,10 @@ interface Game {
   name: string;
   description: string;
   creator: string;
-  cover: string;
+  imageFolder: string;
+  imageCount: number;
   price: number;
   discount: number;
-  rating: number;
-  releaseDate: string;
   tags: string[];
 }
 

@@ -114,6 +114,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const games: Game[] = await fetchGameData();
+      let gameList: Game[] = [];
 
       const gameNumberResponse = await fetch(
         'https://drmmina_chain.kadircan.org/graphql',
@@ -154,16 +155,23 @@ export default function App() {
           data.runtime.GameToken.discount?.value &&
           data.runtime.GameToken.gamePrice?.value
         ) {
-          games[gameId - 1].price = Number(
-            data.runtime.GameToken.gamePrice?.value.toString(),
-          );
-          games[gameId - 1].discount = Number(
-            data.runtime.GameToken.discount?.value.toString(),
-          );
+          const game = games.find((game: Game) => game.gameId === gameId);
+          if (game) {
+            game.price = Number(
+              data.runtime.GameToken.gamePrice?.value.toString(),
+            );
+            game.discount = Number(
+              data.runtime.GameToken.discount?.value.toString(),
+            );
+            if (!game.imageFolder) {
+              game.imageFolder = 'default';
+            }
+            gameList.push(game);
+          }
         }
       }
-      gameStore.setGames(games);
-      const discounts = games.filter((game: Game) => game.discount > 0);
+      gameStore.setGames(gameList);
+      const discounts = gameList.filter((game: Game) => game.discount > 0);
       gameStore.setDiscountGames(discounts);
     })();
   }, []);
