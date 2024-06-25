@@ -1,5 +1,4 @@
-import sudo from '@vscode/sudo-prompt';
-import { ipcMain } from 'electron';
+import { exec } from 'child_process';
 import { RawIdentifiers } from './identifiers';
 
 let system_info: RawIdentifiers = {
@@ -18,21 +17,19 @@ export function getMacOSSystemInfo(): Promise<RawIdentifiers> {
     icns: '/assets/icon.svg',
   };
   const command =
-    'system_profiler SPHardwareDataType | grep "Processor Name" && system_profiler SPHardwareDataType | grep "Serial Number (system)" && system_profiler SPHardwareDataType | grep "Hardware UUID" && system_profiler SPHardwareDataType | grep "Serial Number (system)" && system_profiler SPHardwareDataType | grep "MAC Address"';
+    'system_profiler SPHardwareDataType | grep "Model Number" && system_profiler SPHardwareDataType | grep "Serial Number (system)" && system_profiler SPHardwareDataType | grep "Hardware UUID" && system_profiler SPHardwareDataType | grep "Serial Number (system)" && ifconfig en0 | grep ether && ifconfig en1 | grep ether';
 
   return new Promise((resolve, reject) => {
-    sudo.exec(command, options, (error, stdout, stderr) => {
+    exec(command, (error, stdout, stderr) => {
       if (error) reject(error);
 
       if (stdout) {
-        const lines = stdout.toString().split('\n');
-        const cpu_id = lines[0].split(':')[1].trim();
-        const system_serial = lines[1].split(':')[1].trim();
-        const system_uuid = lines[2].split(':')[1].trim();
-        const baseboard_serial = lines[3].split(':')[1].trim();
-        const mac_addresses = lines
-          .slice(4, lines.length - 1)
-          .map((line: string) => line.trim().split(':')[1].trim());
+        const lines = stdout.trim().split('\n');
+        const cpu_id = '0000000000000000';
+        const system_serial = lines[1].split(': ')[1].trim();
+        const system_uuid = lines[2].split(': ')[1].trim();
+        const baseboard_serial = lines[3].split(': ')[1].trim();
+        const mac_addresses = lines.slice(4).map((line) => line.split(' ')[1]);
 
         system_info = {
           cpuId: cpu_id,
