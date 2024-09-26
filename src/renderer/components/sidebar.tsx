@@ -88,7 +88,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Shapes className="mr-2 h-4 w-4" />
               Categories
             </Button>
-            <Button
+            {/* <Button
               variant={currentPath == '/library' ? 'secondary' : 'ghost'}
               className="w-full justify-start"
               onClick={() => handleNavigate('/library')}
@@ -104,7 +104,7 @@ export function Sidebar({ className }: SidebarProps) {
               <Bookmark className="mr-2 h-4 w-4" />
               Wishlist
             </Button>
-            <Web3Wallet />
+            <Web3Wallet /> */}
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ export function Sidebar({ className }: SidebarProps) {
           className=" rounded-lg text-center items-center"
           variant="outline"
         >
-          v0.0.1
+          v0.1.0
         </Badge>
       </div>
     </div>

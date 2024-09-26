@@ -18,7 +18,7 @@ import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 
-const ENDPOINT = 'https://drmmina_api.kadircan.org/';
+const ENDPOINT = 'http://localhost:3333/';
 
 export default function Discounts() {
   const gameStore = useGamesStore();
@@ -72,9 +72,7 @@ export default function Discounts() {
                           {game?.price - game?.discount}
                         </span>
                         <img
-                          src={
-                            'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
-                          }
+                          src={'http://localhost:3333/images/mina/20/mina.webp'}
                           alt="mina"
                           className=" w-4 h-4 inline-block"
                         />

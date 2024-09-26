@@ -1,4 +1,4 @@
-const ENDPOINT = 'https://drmmina_api.kadircan.org/';
+const ENDPOINT = 'http://localhost:3333/';
 
 export async function fetchGameData() {
   const headers = { 'Content-Type': 'application/json' };

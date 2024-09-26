@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { Separator } from '@/components/ui/separator';
 
-const ENDPOINT = 'https://drmmina_api.kadircan.org/';
+const ENDPOINT = 'http://localhost:3333/';
 
 export default function GameDetail() {
   const { gameName } = useParams();
@@ -101,9 +101,7 @@ export default function GameDetail() {
                     {game?.price! - game?.discount!}
                   </span>
                   <img
-                    src={
-                      'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
-                    }
+                    src={'http://localhost:3333/images/mina/20/mina.webp'}
                     alt="mina"
                     className=" w-4 h-4 inline-block"
                   />
@@ -128,17 +126,38 @@ export default function GameDetail() {
           </div>
         </div>
       </div>
-      <div className=" w-1/3 p-8">
-        <h3 className=" font-semibold">Recommended System Requirements</h3>
-        <Separator />
-        <div className=" text-base mt-4">
-          <ul>
-            <li>Processor: Intel Core i5-3570K</li>
-            <li>Memory: 8 GB RAM</li>
-            <li>Graphics: GeForce GTX 780</li>
-            <li>Storage: 10 GB available space</li>
-          </ul>
+      <div className=" grid grid-cols-6">
+        <div className=" col-span-2 p-8">
+          <h3 className=" font-semibold">Contract Adresses</h3>
+          <Separator />
+          <div className=" mt-4 gap-2 flex flex-col text-sm">
+            <div>
+              <span className=" font-semibold">
+                Game Token Contract Address:{' '}
+              </span>
+              <a
+                href={`https://minascan.io/devnet/account/${game?.gameTokenContractAddress}`}
+                target="_blank"
+                rel="noreferrer"
+                className=" text-sm font-normal underline underline-offset-4"
+              >
+                {game?.gameTokenContractAddress}
+              </a>
+            </div>
+            <div>
+              <span className=" font-semibold">DRM Contract Address: </span>
+              <a
+                href={`https://minascan.io/devnet/account/${game?.DRMContractAddress}`}
+                target="_blank"
+                rel="noreferrer"
+                className=" text-sm font-normal underline underline-offset-4"
+              >
+                {game?.DRMContractAddress}
+              </a>
+            </div>
+          </div>
         </div>
+        <div className=" col-span-1"></div>
       </div>
       {/* <CommentSection /> */}
     </div>

@@ -20,7 +20,7 @@ import GameBookmark from './bookmark';
 import { useUserStore } from '../lib/stores/userWallet';
 import { Check } from 'lucide-react';
 
-const ENDPOINT = 'https://drmmina_api.kadircan.org/';
+const ENDPOINT = 'http://localhost:3333/';
 
 export default function Featured() {
   const navigate = useNavigate();
@@ -78,9 +78,7 @@ export default function Featured() {
                           {game?.price - game?.discount}
                         </span>
                         <img
-                          src={
-                            'https://drmmina_api.kadircan.org/images/mina/20/mina.webp'
-                          }
+                          src={'http://localhost:3333/images/mina/20/mina.webp'}
                           alt="mina"
                           className=" w-5 h-5 inline-block"
                         />

@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const ENDPOINT = 'https://drmmina_api.kadircan.org/';
+const ENDPOINT = 'http://localhost:3333/';
 
 export default function Browse() {
   const { search } = useParams();

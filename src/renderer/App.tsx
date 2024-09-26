@@ -10,169 +10,27 @@ import Categories from './pages/categories';
 import Library from './pages/library';
 import Wishlist from './pages/wishlist';
 import { useEffect } from 'react';
-import { fetchGameData, fetchWishlist } from './lib/api';
+import { fetchGameData } from './lib/api';
 import { useGamesStore } from './lib/stores/gameStore';
-import { useUserStore } from './lib/stores/userWallet';
 import Browse from './pages/browse';
-
-const priceQuery = `
-query GetPrices {
-  runtime {
-    GameToken {
-      gamePrice(key: {value: "$gameId"}) {
-        value
-      }
-      discount(key: {value: "$gameId"}) {
-        value
-      }
-    }
-  }
-}
-`;
-
-const gameNumberQuery = `
-query TotalGameNumber {
-  runtime {
-    GameToken {
-      totalGameNumber {
-        value
-      }
-    }
-  }
-}
-`;
-
-const libraryQuery = `
-query getLibrary {
-  runtime {
-    GameToken {
-      users(key: {address: "$address", gameId: {value: "$gameId"}})
-    }
-  }
-}
-`;
 
 export default function App() {
   const gameStore = useGamesStore();
 
-  const userStore = useUserStore();
-
-  useEffect(() => {
-    if (userStore.isConnected) {
-      (async () => {
-        const wishlist = await fetchWishlist(userStore.userPublicKey!);
-
-        userStore.setWishlist(wishlist);
-
-        const gameNumberResponse = await fetch(
-          'https://drmmina_chain.kadircan.org/graphql',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              query: gameNumberQuery,
-            }),
-          },
-        );
-
-        const { data } = (await gameNumberResponse.json()) as GameNumber;
-
-        const gameIds = Array.from(
-          { length: Number(data.runtime.GameToken.totalGameNumber.value) },
-          (_, i) => i + 1,
-        );
-        let library: number[] = [];
-        for (const gameId of gameIds) {
-          const response = await fetch(
-            'https://drmmina_chain.kadircan.org/graphql',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                query: libraryQuery
-                  .replace(/\$address/g, userStore.userPublicKey!)
-                  .replace(/\$gameId/g, gameId.toString()),
-              }),
-            },
-          );
-
-          const { data } = (await response.json()) as Library;
-
-          if (data.runtime.GameToken.users) {
-            library.push(gameId);
-          }
-        }
-        userStore.setLibrary(library);
-      })();
-    }
-  }, [userStore.isConnected, userStore.userPublicKey]);
-
   useEffect(() => {
     (async () => {
       const games: Game[] = await fetchGameData();
-      let gameList: Game[] = [];
-
-      const gameNumberResponse = await fetch(
-        'https://drmmina_chain.kadircan.org/graphql',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: gameNumberQuery,
-          }),
-        },
-      );
-
-      const { data } = (await gameNumberResponse.json()) as GameNumber;
-
-      const gameIds = Array.from(
-        { length: Number(data.runtime.GameToken.totalGameNumber.value) },
-        (_, i) => i + 1,
-      );
-      for (const gameId of gameIds) {
-        const response = await fetch(
-          'https://drmmina_chain.kadircan.org/graphql',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              query: priceQuery.replace(/\$gameId/g, gameId.toString()),
-            }),
-          },
-        );
-
-        const { data } = (await response.json()) as GamePrices;
-
-        if (
-          data.runtime.GameToken.discount?.value &&
-          data.runtime.GameToken.gamePrice?.value
-        ) {
-          const game = games.find((game: Game) => game.gameId === gameId);
-          if (game) {
-            game.price = Number(
-              data.runtime.GameToken.gamePrice?.value.toString(),
-            );
-            game.discount = Number(
-              data.runtime.GameToken.discount?.value.toString(),
-            );
-            if (!game.imageFolder) {
-              game.imageFolder = 'default';
-            }
-            gameList.push(game);
-          }
+      let discountGames: Game[] = [];
+      games.forEach((game) => {
+        if (!game.imageFolder) {
+          game.imageFolder = 'default';
         }
-      }
-      gameStore.setGames(gameList);
-      const discounts = gameList.filter((game: Game) => game.discount > 0);
-      gameStore.setDiscountGames(discounts);
+        if (game.discount > 0) {
+          discountGames.push(game);
+        }
+      });
+      gameStore.setGames(games);
+      gameStore.setDiscountGames(discountGames);
     })();
   }, []);
 
