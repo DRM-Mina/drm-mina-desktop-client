@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import GameBookmark from './bookmark';
+// import GameBookmark from './bookmark';
 import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
@@ -59,7 +59,7 @@ export default function Discounts() {
                       className="w-full h-full object-cover"
                     />
                     <DiscountRate game={game} />
-                    <GameBookmark gameId={game.gameId} />
+                    {/* <GameBookmark gameId={game.gameId} /> */}
                   </CardContent>
                   <CardFooter className="w-</CardContent>full flex justify-between">
                     <CardTitle className=" text-base">{game.name}</CardTitle>

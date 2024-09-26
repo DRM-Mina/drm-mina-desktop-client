@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
-import GameBookmark from './bookmark';
+// import GameBookmark from './bookmark';
 import { useUserStore } from '../lib/stores/userWallet';
 import { Check } from 'lucide-react';
 
@@ -61,7 +61,7 @@ export default function Featured() {
                       className="w-full h-full object-cover"
                     />
                     <DiscountRate variant={'bg'} game={game} />
-                    <GameBookmark className=" h-8 w-8" gameId={game.gameId} />
+                    {/* <GameBookmark className=" h-8 w-8" gameId={game.gameId} /> */}
                   </CardContent>
                   <CardFooter className="w-full flex justify-between">
                     <CardTitle>{game.name}</CardTitle>
