@@ -17,7 +17,7 @@ import {
 import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
-import { API_URL } from '@/src/env';
+import { API_URL } from '@/env';
 
 export default function Discounts() {
   const gameStore = useGamesStore();

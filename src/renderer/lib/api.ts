@@ -1,4 +1,4 @@
-import { API_URL } from '@/src/env';
+import { API_URL } from '@/env';
 
 export async function fetchGameData() {
   const headers = { 'Content-Type': 'application/json' };

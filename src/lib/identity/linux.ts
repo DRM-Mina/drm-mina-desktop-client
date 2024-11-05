@@ -1,5 +1,4 @@
 import sudo from '@vscode/sudo-prompt';
-import { ipcMain } from 'electron';
 import { RawIdentifiers } from './identifiers';
 
 let system_info: RawIdentifiers = {

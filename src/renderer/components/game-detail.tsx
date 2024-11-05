@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { Separator } from '@/components/ui/separator';
-import { API_URL } from '@/src/env';
+import { API_URL } from '@/env';
 
 export default function GameDetail() {
   const { gameName } = useParams();

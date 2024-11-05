@@ -1,12 +1,12 @@
 {
-  "name": "drm-mina-desktop-client",
-  "version": "1.1.0",
-  "description": "Desktop client for DRM Mina",
+  "name": "electron-react-boilerplate",
+  "version": "4.6.0",
+  "description": "A foundation for scalable desktop apps",
   "license": "MIT",
   "author": {
     "name": "Electron React Boilerplate Maintainers",
     "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/DRM-Mina/drm-mina-desktop-client"
+    "url": "https://github.com/electron-react-boilerplate"
   },
   "main": "./dist/main/main.js",
   "scripts": {
