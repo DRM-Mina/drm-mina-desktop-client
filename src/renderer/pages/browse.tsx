@@ -8,8 +8,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { useNavigate, useParams } from 'react-router-dom';
-
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export default function Browse() {
   const { search } = useParams();
@@ -41,7 +40,7 @@ export default function Browse() {
           <CardContent className=" absolute flex aspect-square w-[300px] items-center justify-center p-4">
             <img
               src={
-                ENDPOINT +
+                API_URL +
                 'images/' +
                 game.imageFolder +
                 '/10/' +

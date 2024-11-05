@@ -19,8 +19,7 @@ import { useGamesStore } from '../lib/stores/gameStore';
 // import GameBookmark from './bookmark';
 import { useUserStore } from '../lib/stores/userWallet';
 import { Check } from 'lucide-react';
-
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export default function Featured() {
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ export default function Featured() {
                   <CardContent className="flex items-center justify-center p-6 lg:aspect-video md:aspect-square relative">
                     <img
                       src={
-                        ENDPOINT +
+                        API_URL +
                         'images/' +
                         game.imageFolder +
                         '/20/' +
@@ -78,7 +77,7 @@ export default function Featured() {
                           {game?.price - game?.discount}
                         </span>
                         <img
-                          src={'http://localhost:3333/images/mina/20/mina.webp'}
+                          src={`${API_URL}images/mina/20/mina.webp`}
                           alt="mina"
                           className=" w-5 h-5 inline-block"
                         />

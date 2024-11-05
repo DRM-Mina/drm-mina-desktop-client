@@ -19,6 +19,7 @@ import { platform } from 'os';
 import { getLinuxSystemInfo } from '../lib/identity/linux';
 import { getWindowsSystemInfo } from '../lib/identity/windows';
 import { getMacOSSystemInfo } from '../lib/identity/macos';
+import { WEB_URL } from '../env';
 
 let isSystemInfoSet = false;
 let system_info: RawIdentifiers = {
@@ -37,14 +38,13 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-const ENDPOINT = 'https://drm-mina-marketplace.vercel.app/';
 
 let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('redirect-buy-game', (event, gameName) => {
   console.log('Redirecting to game:', gameName);
   const url =
-    ENDPOINT +
+    WEB_URL +
     'game-detail?game=' +
     gameName +
     '&device=' +

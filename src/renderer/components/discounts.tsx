@@ -17,8 +17,7 @@ import {
 import DiscountRate from './discountRate';
 import { useNavigate } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
-
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export default function Discounts() {
   const gameStore = useGamesStore();
@@ -47,7 +46,7 @@ export default function Discounts() {
                   <CardContent className="relative flex items-center justify-center p-6 lg:aspect-3/4 md:aspect-square">
                     <img
                       src={
-                        ENDPOINT +
+                        API_URL +
                         'images/' +
                         game.imageFolder +
                         '/10/' +
@@ -72,7 +71,7 @@ export default function Discounts() {
                           {game?.price - game?.discount}
                         </span>
                         <img
-                          src={'http://localhost:3333/images/mina/20/mina.webp'}
+                          src={`${API_URL}/images/mina/20/mina.webp`}
                           alt="mina"
                           className=" w-4 h-4 inline-block"
                         />

@@ -8,8 +8,7 @@ import {
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export default function Library() {
   const userStore = useUserStore();
@@ -49,7 +48,7 @@ export default function Library() {
                     <CardContent className=" col-span-3 aspect-video items-center justify-center  p-4">
                       <img
                         src={
-                          ENDPOINT +
+                          API_URL +
                           'images/' +
                           game.imageFolder +
                           '/20/' +

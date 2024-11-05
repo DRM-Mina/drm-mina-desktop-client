@@ -9,8 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { Separator } from '@/components/ui/separator';
-
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export default function GameDetail() {
   const { gameName } = useParams();
@@ -45,7 +44,7 @@ export default function GameDetail() {
                   <img
                     src={
                       imageCount > 1
-                        ? ENDPOINT! +
+                        ? API_URL +
                           'images/' +
                           game?.imageFolder +
                           '/40/' +
@@ -53,7 +52,7 @@ export default function GameDetail() {
                           '_ingame_' +
                           (i + 1) +
                           '.webp'
-                        : ENDPOINT! + 'images/default/40/default.webp'
+                        : API_URL + 'images/default/40/default.webp'
                     }
                     crossOrigin="anonymous"
                     alt="Game"
@@ -101,7 +100,7 @@ export default function GameDetail() {
                     {game?.price! - game?.discount!}
                   </span>
                   <img
-                    src={'http://localhost:3333/images/mina/20/mina.webp'}
+                    src={`${API_URL}images/mina/20/mina.webp`}
                     alt="mina"
                     className=" w-4 h-4 inline-block"
                   />

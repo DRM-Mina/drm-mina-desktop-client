@@ -1,8 +1,8 @@
-const ENDPOINT = 'http://localhost:3333/';
+import { API_URL } from '@/src/env';
 
 export async function fetchGameData() {
   const headers = { 'Content-Type': 'application/json' };
-  const res = await fetch(ENDPOINT + 'game-data', { headers, method: 'GET' });
+  const res = await fetch(API_URL + 'game-data', { headers, method: 'GET' });
   const json = await res.json();
   if (json.errors) {
     console.error(json.errors);
@@ -19,7 +19,7 @@ export async function toggleGameWishlist(
 
   console.log('wishlist', userPubKey, gameId);
 
-  const res = await fetch(ENDPOINT + 'wishlist/' + userPubKey, {
+  const res = await fetch(API_URL + 'wishlist/' + userPubKey, {
     headers,
     method: 'POST',
     body: JSON.stringify({ gameId }),
@@ -43,7 +43,7 @@ export async function toggleGameWishlist(
 export async function fetchWishlist(userPubKey: string) {
   const headers = { 'Content-Type': 'application/json' };
 
-  const res = await fetch(ENDPOINT + 'wishlist/' + userPubKey, {
+  const res = await fetch(API_URL + 'wishlist/' + userPubKey, {
     headers,
     method: 'GET',
   });
