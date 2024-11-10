@@ -11,41 +11,25 @@ interface Game {
   discount: number;
   tags: string[];
   downloadable: boolean;
+  averageRating: number;
+  ratingCount: number;
 }
-
-interface GamePrices {
-  data: {
-    runtime: {
-      GameToken: {
-        gamePrice: {
-          value: string | null;
-        };
-        discount: {
-          value: string | null;
-        };
-      };
-    };
-  };
+interface RawIdentifiers {
+  cpuId: string;
+  systemSerial: string;
+  systemUUID: string;
+  baseboardSerial: string;
+  macAddress: string[];
+  diskSerial: string;
 }
-
-interface GameNumber {
-  data: {
-    runtime: {
-      GameToken: {
-        totalGameNumber: {
-          value: string | null;
-        };
-      };
-    };
+interface IComment {
+  _id: string;
+  user: {
+    publicKey: string;
+    _id: string;
   };
-}
-
-interface Library {
-  data: {
-    runtime: {
-      GameToken: {
-        users: boolean | null;
-      };
-    };
-  };
+  gameId: number;
+  content: string;
+  rating: number;
+  createdAt: string;
 }

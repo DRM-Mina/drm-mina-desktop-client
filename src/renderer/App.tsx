@@ -7,8 +7,6 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Searchbar from './components/searchbar';
 import GameDetail from './components/game-detail';
 import Categories from './pages/categories';
-import Library from './pages/library';
-import Wishlist from './pages/wishlist';
 import { useEffect } from 'react';
 import { fetchGameData } from './lib/api';
 import { useGamesStore } from './lib/stores/gameStore';
@@ -47,8 +45,6 @@ export default function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/store" element={<Home />} />
                   <Route path="/categories" element={<Categories />} />
-                  <Route path="/library" element={<Library />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/browse/:search" element={<Browse />} />
                   <Route
                     path="/game-detail/:gameName"

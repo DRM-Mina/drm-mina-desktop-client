@@ -12,24 +12,14 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import { platform } from 'os';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { RawIdentifiers } from '../lib/identity/identifiers';
-import { platform } from 'os';
-import { getLinuxSystemInfo } from '../lib/identity/linux';
-import { getWindowsSystemInfo } from '../lib/identity/windows';
-import { getMacOSSystemInfo } from '../lib/identity/macos';
-import { WEB_URL } from '../env';
-
-let isSystemInfoSet = false;
-let system_info: RawIdentifiers = {
-  cpuId: '',
-  systemSerial: '',
-  systemUUID: '',
-  baseboardSerial: '',
-  macAddress: [],
-  diskSerial: '',
-};
+import { RawIdentifiers } from '@/lib/identity/identifiers';
+import { getLinuxSystemInfo } from '@/lib/identity/linux';
+import { getWindowsSystemInfo } from '@/lib/identity/windows';
+import { getMacOSSystemInfo } from '@/lib/identity/macos';
+import { WEB_URL } from '@/env';
 
 class AppUpdater {
   constructor() {
@@ -40,6 +30,37 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let isSystemInfoSet = false;
+let system_info: RawIdentifiers = {
+  cpuId: '',
+  systemSerial: '',
+  systemUUID: '',
+  baseboardSerial: '',
+  macAddress: [],
+  diskSerial: '',
+};
+
+const getIdentifiers = () => {
+  if (platform() === 'linux') {
+    getLinuxSystemInfo().then((data) => {
+      system_info = data;
+      isSystemInfoSet = true;
+      console.log('Data:', system_info);
+    });
+  } else if (platform() === 'win32') {
+    getWindowsSystemInfo().then((data) => {
+      system_info = data;
+      isSystemInfoSet = true;
+      console.log('Data:', system_info);
+    });
+  } else if (platform() === 'darwin') {
+    getMacOSSystemInfo().then((data) => {
+      system_info = data;
+      isSystemInfoSet = true;
+      console.log('Data:', system_info);
+    });
+  }
+};
 
 ipcMain.on('redirect-buy-game', (event, gameName) => {
   console.log('Redirecting to game:', gameName);
@@ -147,34 +168,11 @@ app.on('window-all-closed', () => {
   }
 });
 
-const getIdentifiers = () => {
-  if (platform() === 'linux') {
-    getLinuxSystemInfo().then((data) => {
-      system_info = data;
-      isSystemInfoSet = true;
-      console.log('Data:', system_info);
-    });
-  } else if (platform() === 'win32') {
-    getWindowsSystemInfo().then((data) => {
-      system_info = data;
-      isSystemInfoSet = true;
-      console.log('Data:', system_info);
-    });
-  } else if (platform() === 'darwin') {
-    getMacOSSystemInfo().then((data) => {
-      system_info = data;
-      isSystemInfoSet = true;
-      console.log('Data:', system_info);
-    });
-  }
-};
-
 app
   .whenReady()
   .then(() => {
     createWindow();
     getIdentifiers();
-
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

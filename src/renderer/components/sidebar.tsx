@@ -88,23 +88,6 @@ export function Sidebar({ className }: SidebarProps) {
               <Shapes className="mr-2 h-4 w-4" />
               Categories
             </Button>
-            {/* <Button
-              variant={currentPath == '/library' ? 'secondary' : 'ghost'}
-              className="w-full justify-start"
-              onClick={() => handleNavigate('/library')}
-            >
-              <Gamepad2 className="mr-2 h-4 w-4" />
-              Library
-            </Button>
-            <Button
-              variant={currentPath == '/wishlist' ? 'secondary' : 'ghost'}
-              className="w-full justify-start"
-              onClick={() => handleNavigate('/wishlist')}
-            >
-              <Bookmark className="mr-2 h-4 w-4" />
-              Wishlist
-            </Button>
-            <Web3Wallet /> */}
           </div>
         </div>
       </div>
@@ -114,7 +97,7 @@ export function Sidebar({ className }: SidebarProps) {
           className=" rounded-lg text-center items-center"
           variant="outline"
         >
-          v0.1.0
+          v1.0
         </Badge>
       </div>
     </div>

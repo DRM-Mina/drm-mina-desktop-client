@@ -3,13 +3,15 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { ChevronLeft, Download } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGamesStore } from '../lib/stores/gameStore';
 import { Separator } from '@/components/ui/separator';
-import { API_URL } from '@/src/env';
+import { API_URL } from '@/env';
+import RatingDisplay from './ratingDisplay';
+import CommentSection from './commentSection';
 
 export default function GameDetail() {
   const { gameName } = useParams();
@@ -18,8 +20,6 @@ export default function GameDetail() {
 
   const game = gameStore.games.find((game) => game.name === gameName);
   const imageCount = game?.imageCount || 1;
-
-  const handleDownload = () => {};
 
   return (
     <div>
@@ -68,7 +68,15 @@ export default function GameDetail() {
             <h1 className=" text-3xl font-bold p-4">{game?.name}</h1>
             <div className=" text-base mt-8">{game?.description}</div>
 
-            <div>Total Reviews: 5 (4.3)</div>
+            <div className=" flex flex-col items-center justify-center">
+              <RatingDisplay
+                rating={game?.averageRating || 0}
+                decimals={true}
+              />
+              <div className=" flex items-center text-sm">
+                Total Reviews: {game?.ratingCount}
+              </div>
+            </div>
 
             <div>
               {Array.from(game?.tags || []).map((tag, index) => (
@@ -114,13 +122,9 @@ export default function GameDetail() {
                     );
                   }}
                 >
-                  Buy Game
+                  Visit Store
                 </Button>
               </div>
-              <Button variant={'link'} className="">
-                <Download size={24} onClick={handleDownload} />
-                Download Game
-              </Button>
             </div>
           </div>
         </div>
@@ -158,7 +162,7 @@ export default function GameDetail() {
         </div>
         <div className=" col-span-1"></div>
       </div>
-      {/* <CommentSection /> */}
+      <CommentSection game={game!} />
     </div>
   );
 }
