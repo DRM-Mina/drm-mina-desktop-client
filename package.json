@@ -175,8 +175,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "DRM Mina Desktop Client",
+    "appId": "org.erb.DRMMinaDesktopClient",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
