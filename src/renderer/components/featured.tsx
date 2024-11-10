@@ -80,25 +80,18 @@ export default function Featured() {
                           className=" w-5 h-5 inline-block"
                         />
                       </CardShadow>
-
-                      {!userStore.library.includes(game.gameId || -1) ? (
-                        <Button
-                          variant={'default'}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            window.electron.ipcRenderer.sendMessage(
-                              'redirect-buy-game',
-                              [game?.name],
-                            );
-                          }}
-                        >
-                          Buy Game
-                        </Button>
-                      ) : (
-                        <div className=" flex flex-row items-center text-green-700">
-                          <Check /> <span>Owned</span>
-                        </div>
-                      )}
+                      <Button
+                        variant={'default'}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          window.electron.ipcRenderer.sendMessage(
+                            'redirect-buy-game',
+                            [game?.name],
+                          );
+                        }}
+                      >
+                        Visit Store
+                      </Button>
                     </div>
                   </CardFooter>
                 </Card>
