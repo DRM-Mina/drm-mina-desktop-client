@@ -54,3 +54,26 @@ export async function fetchWishlist(userPubKey: string) {
   }
   return json;
 }
+
+export async function fetchComments(
+  gameId: number,
+  page: number = 1,
+  limit: number = 10,
+): Promise<any> {
+  const headers = { 'Content-Type': 'application/json' };
+  const res = await fetch(
+    `${API_URL}comments/${gameId}?page=${page}&limit=${limit}`,
+    {
+      headers,
+      method: 'GET',
+    },
+  );
+  if (!res.ok) {
+    const errorResponse = await res.json();
+    console.error(errorResponse.message);
+    throw new Error(`Failed to fetch comments: ${errorResponse.message}`);
+  }
+
+  const json = await res.json();
+  return json;
+}
