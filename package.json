@@ -176,7 +176,7 @@
   },
   "build": {
     "productName": "DRM Mina Desktop Client",
-    "appId": "org.erb.DRMMinaDesktopClient",
+    "appId": "org.drmmina.DRM-Mina-Desktop-Client",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -184,9 +184,9 @@
       "node_modules",
       "package.json"
     ],
+    "afterSign": ".erb/scripts/notarize.js",
     "mac": {
-      "sign": ".erb/scripts/notarize.js",
-      "notarize": false,
+      "notarize": true,
       "target": {
         "target": "default",
         "arch": [

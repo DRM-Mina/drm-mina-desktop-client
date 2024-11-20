@@ -1,5 +1,6 @@
 {
   "name": "drm-mina-desktop-client",
+  "description": "DRM Mina Desktop Client",
   "version": "1.0.0",
   "license": "MIT",
   "author": {
