@@ -36,6 +36,13 @@ const configuration: webpack.Configuration = {
     },
   },
 
+  externals: {
+    'drm-mina-contracts': 'commonjs2 drm-mina-contracts',
+    o1js: 'commonjs2 o1js',
+    express: 'commonjs2 express',
+    axios: 'commonjs2 axios',
+  },
+
   plugins: [
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

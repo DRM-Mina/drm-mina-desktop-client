@@ -21,6 +21,8 @@ import { getWindowsSystemInfo } from '@/lib/identity/windows';
 import { getMacOSSystemInfo } from '@/lib/identity/macos';
 import { WEB_URL } from '@/env';
 
+import './prover';
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
